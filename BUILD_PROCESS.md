@@ -7,3 +7,6 @@ Selecting Implementation and Tech stack:
 Pre Implementation:
     As a part before implementation I created an architecture diagram depicting the basic working of the system.
 
+Implementation phase:
+    Created a python main file first. Thought about all inputs needed from the user. Inputs to be read from the user - number of ideas (n), n ideas, number of criteria (n), the n criterias , weights of criterias with their type (whether maximizing or minimizing), score of each criterias for the each idea.
+
