@@ -1,3 +1,13 @@
+def normalize_weights(criteria):
+
+    total_weight = sum(c["weight"] for c in criteria)
+    if total_weight == 0:
+        return criteria
+    for c in criteria:
+        c["normalized_weight"] = c["weight"] / total_weight
+    return criteria
+
+
 no_idea= int(input("Enter the number of ideas: "))
 ideas=[]
 for i in range(no_idea):
@@ -13,6 +23,8 @@ for i in range(no_criteria):
     print("\n")
     criteria.append({"name":c_name,"weight":c_weight,"type":c_type})
 
+criteria = normalize_weights(criteria)
+
 score={}
 for i in ideas:
     print("Enter the scores for the idea - ",i,"\n")
@@ -24,13 +36,13 @@ for i in ideas:
 
 
 
-    print("\n=== Input Summary ===")
+""" print("\n=== Input Summary ===")
     print("\nIdeas:", ideas)
     print("\nCriteria:")
     for c in criteria:
-        print(c)
+        print(f"  {c['name']}: weight={c['weight']}, normalized={c['normalized_weight']:.3f}, type={c['type']}")
 
     print("\nScores:")
     for idea, sc in score.items():
         print(idea, sc)
-
+"""
