@@ -6,3 +6,7 @@ AI prompt
     1.Help me create an architecture for startup idea evaluator used to rank the ideas in order and suggests why such a recommendation was made. I want to build a CLI using python.
 
     2. For the startup idea evaluator CLI I need a decision making core to rank the ideas. What are the ways to do it
+
+    3. Will using AI in the explanation of ranking an idea make the system better ?
+
+    4. How to use Ai in the system without it controlling the decision making.
