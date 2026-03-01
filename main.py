@@ -19,6 +19,64 @@ def calculate_weighted_score(scores, criteria):
     return total_score
 
 
+def explain_ranking(idea, scores, criteria, final_scores, ranked):
+    # Find rank
+    rank = 1
+    for name, _ in ranked:
+        if name == idea:
+            break
+        rank = rank + 1
+
+    # Only explain for rank 1
+    if rank != 1:
+        return
+
+    print("\n" + "="*50)
+    print("Why '" + idea + "' is ranked first")
+    print("="*50)
+
+    print("'" + idea + "' achieved the highest score of", round(final_scores[idea], 3), ".")
+    print("\nHere is how it compared to all other ideas:")
+
+    # Compare with each other idea
+    for idx in range(1, len(ranked)):
+        other_idea = ranked[idx][0]
+        other_score = final_scores[other_idea]
+        margin = final_scores[idea] - other_score
+
+        print("\nvs '" + other_idea + "' (scored", round(other_score, 3), ", margin:", round(margin, 3), "points):")
+
+        # Find advantages
+        advantages = []
+        for c in criteria:
+            raw_this = scores[idea][c["name"]]
+            raw_other = scores[other_idea][c["name"]]
+            if c["type"] == "min":
+                adj_this = 10 - raw_this
+                adj_other = 10 - raw_other
+            else:
+                adj_this = raw_this
+                adj_other = raw_other
+            if adj_this > adj_other:
+                score_diff = adj_this - adj_other
+                weighted_diff = score_diff * c["normalized_weight"]
+                advantages.append({"name": c["name"], "weight": c["weight"], "this_score": adj_this, "other_score": adj_other, "weighted_diff": weighted_diff})
+
+        # Sort by weighted difference
+        for i in range(len(advantages)):
+            for j in range(i + 1, len(advantages)):
+                if advantages[j]["weighted_diff"] > advantages[i]["weighted_diff"]:
+                    temp = advantages[i]
+                    advantages[i] = advantages[j]
+                    advantages[j] = temp
+
+        if len(advantages) > 0:
+            print(" Outperformed in", len(advantages), "criteria.")
+            for i in range(min(2, len(advantages))):
+                adv = advantages[i]
+                print("  - '" + adv["name"] + "' (importance:", adv["weight"], "): scored", round(adv["this_score"], 1), "vs", round(adv["other_score"], 1), "(+", round(adv["weighted_diff"], 3), "weighted points)")
+
+
 no_idea= int(input("Enter the number of ideas: "))
 ideas=[]
 for i in range(no_idea):
@@ -68,3 +126,9 @@ print("\n=== Ranking ===")
 ranked = sorted(final_scores.items(), key=lambda x: x[1], reverse=True)
 for rank, (idea, score_val) in enumerate(ranked, 1):
     print(f"  {rank}. {idea}: {score_val:.3f}")
+
+print("\n" + "="*50)
+print("DETAILED EXPLANATIONS")
+print("="*50)
+for idea, _ in ranked:
+    explain_ranking(idea, score, criteria, final_scores, ranked)
