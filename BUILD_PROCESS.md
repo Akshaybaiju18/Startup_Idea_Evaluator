@@ -20,4 +20,4 @@ Implementation phase:
 
     Next part was to implement the ranking and explaining the reason behind such a ranking. I thought about adding AI to make the explanations better. I researched about using AI without making it the decision maker as it was mentioned in the assignment. So I choose to rank the ideas based on the scores and make a comparison based on the performance of the top ranked idea in the important criterias. The explanation will be made on the output of the comparison. I decided to first implement the explanation without using AI and then later will add it for making the explanation in a more natural way. 
 
-    After Implementing the ranking and explanation model. I decided to add AI to make the output look more presentable. For that I decided to use Gemini API. The code will still give output even if API doesn't work.
+    After Implementing the ranking and explanation model. I decided to add AI to make the output look more presentable. For that I decided to use Gemini API. The code will still give output even if API doesn't work. I had to change from Gemini API to Groq AI as my Gemini API free credits were exhausted.
