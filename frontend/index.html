@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Idea Evaluator</title>
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for beautiful icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="glow-bg"></div>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fa-solid fa-rocket"></i></div>
+                <div class="logo-text">
+                    <h1>Startup Idea Evaluator</h1>
+                    <p>Compare, rank, and analyze your ideas using a weighted decision matrix</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Setup Step 1 & 2: Ideas and Criteria -->
+        <section class="setup-grid">
+            <!-- Ideas Panel -->
+            <div class="glass-card panel-ideas">
+                <div class="panel-header">
+                    <span class="step-badge">1</span>
+                    <h2>Startup Ideas</h2>
+                </div>
+                <p class="panel-desc">Add the different startup concepts you want to evaluate.</p>
+                
+                <form id="add-idea-form" class="panel-form">
+                    <div class="input-group">
+                        <input type="text" id="idea-name-input" placeholder="e.g., AI micro-SaaS for legal docs" required autocomplete="off">
+                        <button type="submit" class="btn-primary" aria-label="Add Idea"><i class="fa-solid fa-plus"></i> Add</button>
+                    </div>
+                </form>
+
+                <div class="ideas-list-container">
+                    <h3>Current Ideas (<span id="ideas-count">0</span>)</h3>
+                    <ul id="ideas-list" class="item-list">
+                        <!-- Dynamically populated -->
+                        <li class="empty-state">No ideas added yet. Enter an idea above to start.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Criteria Panel -->
+            <div class="glass-card panel-criteria">
+                <div class="panel-header">
+                    <span class="step-badge">2</span>
+                    <h2>Evaluation Criteria</h2>
+                </div>
+                <p class="panel-desc">Define what matters to you, its importance (weight), and direction.</p>
+
+                <form id="add-criterion-form" class="panel-form vertical-form">
+                    <div class="form-row">
+                        <div class="form-group flex-2">
+                            <label for="criterion-name-input">Criterion Name</label>
+                            <input type="text" id="criterion-name-input" placeholder="e.g., Market Size, Startup Cost" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group flex-1">
+                            <label for="criterion-weight-input">Importance (1-10): <span id="weight-val">5</span></label>
+                            <input type="range" id="criterion-weight-input" min="1" max="10" value="5" class="slider">
+                        </div>
+                        <div class="form-group">
+                            <label>Direction</label>
+                            <div class="toggle-container">
+                                <input type="checkbox" id="criterion-type-input" class="toggle-checkbox" checked>
+                                <label for="criterion-type-input" class="toggle-label">
+                                    <span class="toggle-inner"></span>
+                                    <span class="toggle-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full"><i class="fa-solid fa-plus"></i> Add Criterion</button>
+                </form>
+
+                <div class="criteria-list-container">
+                    <h3>Current Criteria (<span id="criteria-count">0</span>)</h3>
+                    <ul id="criteria-list" class="item-list">
+                        <!-- Dynamically populated -->
+                        <li class="empty-state">No criteria added yet. Enter a criterion above.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scoring Matrix Panel -->
+        <section id="scoring-section" class="glass-card scoring-panel hidden">
+            <div class="panel-header">
+                <span class="step-badge">3</span>
+                <h2>Score Your Ideas</h2>
+            </div>
+            <p class="panel-desc">Rate each idea on a scale of 1 (poor) to 10 (excellent) for each criterion.</p>
+            
+            <div class="matrix-container-wrapper">
+                <div id="scoring-matrix-container">
+                    <!-- Dynamic scoring table will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Dashboard -->
+        <section id="results-section" class="results-layout hidden">
+            <!-- Rankings and Leaderboard -->
+            <div class="glass-card ranking-panel">
+                <div class="panel-header">
+                    <span class="step-badge">4</span>
+                    <h2>Evaluation Leaderboard</h2>
+                </div>
+                
+                <div class="rankings-container">
+                    <div id="leaderboard-cards" class="leaderboard-cards">
+                        <!-- Top ideas will get special podium cards -->
+                    </div>
+                    
+                    <div class="rankings-list-wrapper">
+                        <h3>Detailed Ranking</h3>
+                        <div id="rankings-table-container">
+                            <!-- Ranked list goes here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Analysis & Comparisons -->
+            <div class="glass-card analysis-panel">
+                <div class="panel-header">
+                    <i class="fa-solid fa-magnifying-glass-chart icon-header"></i>
+                    <h2>Comparative Insights</h2>
+                </div>
+                <p class="panel-desc">Understanding why the winning idea came out ahead based on weighted advantages.</p>
+                
+                <div id="comparative-analysis-container">
+                    <!-- Explanations populated here -->
+                </div>
+            </div>
+
+            <!-- Score Details Table -->
+            <div class="glass-card matrix-details-panel">
+                <div class="panel-header">
+                    <i class="fa-solid fa-table icon-header"></i>
+                    <h2>Detailed Weighted Score Breakdown</h2>
+                </div>
+                <div class="table-responsive">
+                    <table id="breakdown-table" class="breakdown-table">
+                        <!-- Dynamic matrix table -->
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -95,14 +95,24 @@ python main.py
 
 Follow the prompts — enter your ideas, define your criteria, set weights and types, then score each idea. The tool will handle the rest.
 
+**5. Run the Web Frontend (Optional)**
+
+If you prefer a visual interface, you can use the web frontend:
+- Double-click the `frontend/index.html` file in your explorer to open it directly in your browser.
+- Alternatively, run a lightweight local static server in the root of the project:
+  ```bash
+  python -m http.server -d frontend
+  ```
+  Then open `http://localhost:8000` in your web browser.
+
 ---
 
 ## What I'd Improve with More Time
 
-- **Input validation** — right now, entering a non-number where a number is expected will crash the program. Proper validation with helpful error messages would make it much more user-friendly.
-- **Save and load sessions** — let users save their evaluation to a JSON file and come back to it later, or share it with someone else.
-- **Better UI** — the CLI works, but a small web interface would make it accessible to non-technical users and allow for a better visual comparison of ideas.
+- **Input validation** — right now, entering a non-number where a number is expected will crash the CLI program. Proper validation with helpful error messages would make it much more user-friendly.
+- **Save and load sessions** — let users save their evaluation to a JSON file and come back to it later, or share it with someone else (both in CLI and Web).
 - **Batch input via file** — instead of answering every prompt manually, let users provide their data via a structured CSV or JSON file.
 - **Better AI prompts** — the current prompt is functional but could be improved to produce richer, more actionable explanations.
+
 
 
